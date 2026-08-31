@@ -21,7 +21,15 @@ def listen_for_command(recognizer, mic):
 
         segments, _ = model.transcribe(
             temp_wav_path,
-            beam_size=5,
+            vad_filter=True,
+            vad_parameters={
+                "min_silence_duration_ms" : 500,
+                "threshold" : 0.5,
+            },
+            condition_on_previous_text=False,
+            no_speech_threshold = 0.6,
+            log_prob_threshold = -1.0,
+            beam_size=3,
             language="pt",
         )
         transcript = " ".join(
