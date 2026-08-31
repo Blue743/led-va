@@ -3,8 +3,7 @@ import os
 import tempfile
 from faster_whisper import WhisperModel
 
-
-model_size = "small"
+model_size = "small.en"
 
 model = WhisperModel(model_size, device="cpu", compute_type="int8")
 
