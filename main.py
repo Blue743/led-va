@@ -1,41 +1,24 @@
 import os
 import time
 import winsound
-import pvporcupine
-import pyaudio
 import speech_recognition as sr
 from dotenv import load_dotenv
 from led_client import send_brightness_command
 from led_client import send_triad
 from speech import listen_for_command
 from wakeword import detect_wakeword
+from wakeword import reset_wakeword
+from commands import parse_command
 
 
 load_dotenv()
 IP = os.getenv("ESP_IP")
-ACCESS_KEY = os.getenv("PORCUPINE_KEY")
 
 is_active_mode = False
 session_deadline = 0
 SESSION_TIMEOUT = 15
 
 
-# INITIALIZATION
-
-porcupine = pvporcupine.create(
-    access_key=ACCESS_KEY,
-    keyword_paths=["wakeword/alexo.ppn"]
-)
-
-pa = pyaudio.PyAudio()
-
-audio_stream = pa.open(
-    rate=porcupine.sample_rate,
-    channels=1,
-    format=pyaudio.paInt16,
-    input=True,
-    frames_per_buffer=porcupine.frame_length
-)
 
 recognizer = sr.Recognizer()
 mic = sr.Microphone()
@@ -57,6 +40,9 @@ while True:
                 winsound.SND_FILENAME | winsound.SND_ASYNC
             )
 
+            
+            reset_wakeword()
+
             is_active_mode = False
             print("Session ended.")
             continue
@@ -64,23 +50,40 @@ while True:
         print("Listening...")
         transcript = listen_for_command(recognizer, mic)
 
+
         if transcript:
             print("You said:", transcript)
 
-            command_sent = send_triad(transcript, IP)
-            brightness_sent = send_brightness_command(transcript, IP)
+            actions = parse_command(transcript)
 
-            if command_sent or brightness_sent:
+            data_sent = False
+
+            for action in actions: 
+                if action["type"] == "preset":
+                    response_command = send_triad(action["name"], IP)
+
+                    if response_command:
+                        data_sent = True
+                    print(f"Color command sent : {action['name']}")
+
+                if action["type"] == "brightness":
+                    response_brightness = send_brightness_command(action["value"], IP)
+
+                    if response_brightness:
+                        data_sent = True
+                    print(f"Brightness command sent : {action['value']}")
+
+                
+
+            if data_sent:
                 session_deadline = time.time() + SESSION_TIMEOUT
                 print("Session renewed.")
 
-            if "parar" in transcript or "encerrar" in transcript:
-                is_active_mode = False
-                print("Session ended by voice command.")
 
-    # PASSIVE MODE
     else:
-        if detect_wakeword(porcupine, audio_stream):
+
+        if detect_wakeword():
+
             print("Wakeword detected.")
 
             winsound.PlaySound(
