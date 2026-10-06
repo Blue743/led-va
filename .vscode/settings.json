@@ -1,7 +1,4 @@
 {
-  "C_Cpp.errorSquiggles": "disabled",
-  "C_Cpp.intelliSenseEngine": "disabled",
-  "C_Cpp.configurationWarnings": "disabled",
   "files.exclude": {
     "**/.pio": true
   }

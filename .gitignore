@@ -2,10 +2,13 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-git rm -r --cached .
+
 # ambientes virtuais
 venv/
+.venv/
 .env/
 .env
 *.log
 *.tmp
+
+/firmware/leds-platformio/include/secrets.h

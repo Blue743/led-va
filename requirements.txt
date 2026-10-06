@@ -2,10 +2,11 @@ certifi==2026.5.20
 charset-normalizer==3.4.7
 faster-whisper>=1.2,<2
 idna==3.16
-pvporcupine==4.0.2
 PyAudio==0.2.14
 python-dotenv>=1.2,<2
 requests==2.34.2
 SpeechRecognition==3.16.1
 typing_extensions==4.15.0
 urllib3==2.7.0
+onnxruntime==1.27.0
+openwakeword==0.6.0

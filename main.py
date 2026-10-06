@@ -10,15 +10,12 @@ from wakeword import detect_wakeword
 from wakeword import reset_wakeword
 from commands import parse_command
 
-
 load_dotenv()
 IP = os.getenv("ESP_IP")
 
 is_active_mode = False
 session_deadline = 0
 SESSION_TIMEOUT = 15
-
-
 
 recognizer = sr.Recognizer()
 mic = sr.Microphone()
@@ -27,7 +24,6 @@ print("Calibrating microphone...")
 with mic as source:
     recognizer.adjust_for_ambient_noise(source, duration=1)
 print("System ready.")
-
 
 # MAIN LOOP
 
@@ -40,7 +36,6 @@ while True:
                 winsound.SND_FILENAME | winsound.SND_ASYNC
             )
 
-            
             reset_wakeword()
 
             is_active_mode = False
@@ -49,7 +44,6 @@ while True:
 
         print("Listening...")
         transcript = listen_for_command(recognizer, mic)
-
 
         if transcript:
             print("You said:", transcript)
@@ -73,12 +67,9 @@ while True:
                         data_sent = True
                     print(f"Brightness command sent : {action['value']}")
 
-                
-
             if data_sent:
                 session_deadline = time.time() + SESSION_TIMEOUT
                 print("Session renewed.")
-
 
     else:
 

@@ -2,14 +2,12 @@
 import re
 
 commands = {
-    "brisa" : {
+    "gelado" : {
     "colors" : [
-        (255, 132, 0),
-        (137, 255, 0),
-        (0, 255, 92),
-        (0, 255, 242),
+        (0, 105, 255),
+        (225, 235, 250)
     ],
-    "mode" : "triad",
+    "mode" : "cold",
     "brightness" : 80
     },
 
@@ -39,13 +37,16 @@ commands = {
 
     "constante" : {
     "colors" : [
-        (255, 132, 0),
-        (137, 255, 0),
-        (0, 255, 174),
+        (163, 122, 180),
+        (212, 134, 184),
+        (241, 177, 193),
+        (171, 188, 214),
+        (180, 216, 232)
     ],
     "mode" : "one",
     "brightness" : 80
     },
+    
 
     "inteira" : {
     "colors" : [
@@ -56,17 +57,100 @@ commands = {
     "mode" : "all",
     "brightness" : 80
     },
+    
+    "cano" : {
+    "colors" : [
+        (0, 52, 255),
+        (255, 255, 255),
+        (255, 0, 0),
+    ],
+    "mode" : "pole",
+    "brightness" : 150
+    },
+
 
     "estrela" : {
     "colors" : [
-        (75, 89, 252),
+        (138, 38, 245),
     ],
     "mode" : "comet",
     "brightness" : 255
-    }
+    },
+
+    "separado": {
+    "colors": [
+        (110, 20, 255),
+        (185, 50, 255),
+        (255, 45, 170),
+        (255, 75, 70),
+        (255, 125, 20),
+        (255, 195, 30),
+        (70, 150, 255),
+        (35, 60, 255),
+    ],
+    "mode": "group",
+    "brightness": 255
+    }, 
+
+    "cyberpunk": {
+    "colors": [
+    (255, 0, 150),
+    (118, 61, 255),
+    (226, 54, 68),
+    (180, 100, 255),
+    (0, 255, 210),
+    (80, 20, 255),
+    ],
+    "mode": "cyberpunk",
+    "brightness": 120
+    },
+
+    "cherry": {
+    "colors": [
+    (96, 136, 255),
+    (255, 65, 114),
+    (255, 35, 160),
+    (226, 54, 68),
+    (190, 78, 255),
+    (62, 169, 176)
+    ],
+    "mode": "sakura",
+    "brightness": 120
+    },
+
+    "estrelado": {
+    "colors": [
+    (67, 43, 252),
+    (255, 255, 0),
+
+    ],
+    "mode": "galaxy",
+    "brightness": 200
+    }, 
+
+    "múltiplo": {
+    "colors": [
+        (35, 90, 255),
+        (255, 45, 140),
+        (130, 45, 255),
+        (189, 49, 49),
+        (224, 91, 20),
+        (173, 240, 202)
+    ],
+    "mode": "cycle",
+    "brightness": 200
+    },
+
+        "desligar": {
+        "colors": [
+            (0,0,0)
+        ],
+        "mode": "off",
+        "brightness": 0
+        }
 }
 
-
+"ty soshi"
 def parse_command(transcript):
     """Convert a transcript into actions the application can execute."""
     text = transcript.strip().casefold()
